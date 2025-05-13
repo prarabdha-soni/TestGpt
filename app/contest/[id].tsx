@@ -24,7 +24,7 @@ export default function ContestDetailScreen() {
         useNativeDriver: true,
       }),
     ]).start(() => {
-      router.push('/contest/quiz');
+      router.push(`/test/${id}`);
     });
   };
 
