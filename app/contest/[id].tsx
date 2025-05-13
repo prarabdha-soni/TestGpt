@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView, Animated } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ChevronLeft, Clock, BookOpen, Award, AlertCircle } from 'lucide-react-native';
 import { StatusBar } from 'expo-status-bar';
 import { colors } from '@/constants/colors';
 import { LinearGradient } from 'expo-linear-gradient';
+
+function TimerToStart({ contestId }: { contestId: string }) {
+  // Dummy: Replace with actual contest start time lookup if available
+  const [remaining, setRemaining] = useState(600); // 10 min default
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setRemaining(prev => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+  const min = Math.floor(remaining / 60).toString().padStart(2, '0');
+  const sec = (remaining % 60).toString().padStart(2, '0');
+  return (
+    <Text style={{ textAlign: 'center', fontSize: 16, color: colors.primary, marginVertical: 8 }}>
+      Starts in: {min}:{sec}
+    </Text>
+  );
+}
 
 export default function ContestDetailScreen() {
   const router = useRouter();
@@ -35,13 +53,19 @@ export default function ContestDetailScreen() {
       <View style={styles.header}>
         <TouchableOpacity 
           style={styles.backButton} 
-          onPress={() => router.back()}
+          onPress={() => router.push('/')}
         >
           <ChevronLeft size={24} color={colors.textPrimary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Contest Details</Text>
         <View style={styles.placeholder} />
       </View>
+
+      {typeof id === 'string' && (
+        <View style={styles.timerContainer}>
+          <TimerToStart contestId={id} />
+        </View>
+      )}
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <LinearGradient
@@ -285,5 +309,11 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 16,
     fontFamily: 'Poppins-SemiBold',
+  },
+  timerContainer: {
+    padding: 16,
+    backgroundColor: colors.white,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
   },
 });

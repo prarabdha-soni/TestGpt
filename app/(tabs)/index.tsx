@@ -80,12 +80,12 @@ export default function HomeScreen() {
                 <View key={contest.id} style={styles.contestCardWireframe}>
                   <View style={styles.limitedSeatsBadge}><Text style={styles.limitedSeatsText}>LIMITED SEATS</Text></View>
                   <Text style={styles.contestTitleWireframe}>{contest.title}</Text>
-                  <View style={styles.prizeRow}>
-                    <Trophy size={18} color={colors.primary} style={{ marginRight: 4 }} />
-                    <Text style={styles.prizeTextWireframe}>{contest.prize}</Text>
-                  </View>
-                  <View style={styles.contestInfoWireframe}>
-                    <Text style={styles.entryFeeWireframe}><Text style={{color: colors.success}}>{contest.entryFee}</Text><Text style={{color: colors.success}}>₹</Text></Text>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 8 }}>
+                    <View style={styles.prizeRow}>
+                      <Trophy size={18} color={colors.primary} style={{ marginRight: 4 }} />
+                      <Text style={styles.prizeTextWireframe}>{contest.prize}</Text>
+                    </View>
+                    <Text style={styles.entryFeeWireframe}>₹{contest.entryFee}</Text>
                   </View>
                   <View style={styles.spotsRow}>
                     <Text style={styles.spotsLeftText}>{spotsLeft}/{totalSpots} Spots Left</Text>

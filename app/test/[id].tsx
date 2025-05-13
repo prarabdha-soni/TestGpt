@@ -105,8 +105,8 @@ export default function TestScreen() {
           text: "Submit",
           onPress: () => {
             router.push({
-              pathname: `/results/${id}`,
-              params: { score: score.toString() }
+              pathname: '/results/[id]',
+              params: { id, score: score.toString() }
             });
           }
         }
@@ -131,16 +131,7 @@ export default function TestScreen() {
       <View style={styles.header}>
         <TouchableOpacity 
           style={styles.backButton} 
-          onPress={() => {
-            Alert.alert(
-              "Exit Test",
-              "Your progress will be lost. Are you sure you want to exit?",
-              [
-                { text: "Cancel", style: "cancel" },
-                { text: "Exit", onPress: () => router.back() }
-              ]
-            );
-          }}
+          onPress={() => router.push('/')}
         >
           <ChevronLeft size={24} color={colors.textPrimary} />
         </TouchableOpacity>
@@ -343,7 +334,7 @@ const styles = StyleSheet.create({
   },
   disabledButton: {
     borderColor: colors.border,
-    backgroundColor: colors.lightBackground,
+    backgroundColor: colors.background,
   },
   navButtonText: {
     fontFamily: 'Inter-Medium',
